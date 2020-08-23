@@ -44,7 +44,7 @@ class PySearch:
         # Google search endpoint
         endpoint = "https://www.google.com/search?hl=en&q="  + query + "&start=" + str( pageID )
 
-        # requets headers
+        # request headers
         headers = {
             "User-Agent": "Googlebot/2.1 (+http://www.google.com/bot.html)",
         }
@@ -52,6 +52,8 @@ class PySearch:
         # do the search
         res = requests.get( endpoint, headers = headers )
         links = self.extractLinks( res.text )
+
+        # pop links according to the given count ( if needed )
         links = links[:count]
 
         return links
@@ -66,7 +68,7 @@ class PySearch:
         if not matches:
             return []
 
-        # remove the last link because it leads to google account link
+        # remove the last link because it leads to google account page
         matches.pop( -1 )
 
         return self.urlDecodeMatches( matches )
@@ -78,4 +80,3 @@ class PySearch:
             matches[i] = unquote( m )
 
         return matches
-            
